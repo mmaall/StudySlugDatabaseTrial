@@ -1,0 +1,10 @@
+
+CLASSPATH must have current directory and driver.jar
+
+the JDBC URL was a type -- missing //
+
+Needed a test student with id of 1.
+
+Typoed the table name in the code ("s"). 
+
+I removed the stdnt. from the select to debug it.
