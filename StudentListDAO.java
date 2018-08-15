@@ -3,44 +3,110 @@ import java.sql.*;
 
 
 public class StudentListDAO{
-	private ArrayList<Student> studentList;
+
+
+	/**
+	 *Arraylist of Students. Reset and filled whenever a query is made.
+	**/
+	private ArrayList<Student> studentsList;
+	
+	/**
+	 *Holds the database connection to a PostgreSQL database.
+	**/
 	private Connection databaseConnection;
 
-	private PreparedStatement findStudentByFirstName;
-	private PreparedStatement findStudentByLastName;
+	/**
+	 *Holds a prepared statement to find a list of students with a certain
+	 *first name. The result will only contain that exact first name 
+	 *
+	**/
+	private PreparedStatement findStudentByFirstNameExact;
+	
+	/**
+	 *Holds a prepared statement to find a list of students containing a
+	 *certain string in their fisrt name. All results will have the exact 
+	 *string somewhere within the first name.
+	**/
+	private PreparedStatement findStudentByFirstNameContains;
 
 
+	/**
+	 *Holds a prepared statement to find a list of students with a certain
+	 *last name. Results will contain only that exact first name case insensitive.
+	**/
+	private PreparedStatement findStudentByLastNameExact;
+
+	/**
+	 *Holds a prepared statement to find a list of students that contain a certain
+	 *string within thier last name. All results with have the exact input string 
+	 *somewhere within the last name.
+	**/
+	private PreparedStatement findStudentByLastNameContains;
+
+	/**
+	 * Constructs a StudentListDAO with a null database connection.
+	 * This is not very useful is it. 
+	**/
 	StudentListDAO(){
-		studentList= new ArrayList<Student>();
+		studentsList= new ArrayList<Student>();
 		databaseConnection= null;
-		String firstNameSearch= "SELECT " +
+		String firstNameSearchExact= "SELECT " +
 									"student_id, first_name, " +
 									"last_name, email_address " +
 								"FROM students "+
-								"WHERE first_name LIKE '?%'";
+								"WHERE first_name LIKE '?'";
 
 
-		String lastNameSearch = "SELECT " +
-									"student_id, first_name, " +
-									"last_name, email_address " +
-								"FROM students "+
-								"WHERE last_name LIKE '?%'";
+		String lastNameSearchExact ="SELECT " +
+										"student_id, first_name, " +
+										"last_name, email_address " +
+									"FROM students "+
+									"WHERE last_name LIKE '?%'";
 
+		String firstNameSearchContains= "SELECT" +
+											"student_id, first_name, "
+											"last_name, email_address "+
+										"FROM students "+
+										"WHERE first_name LIKE '%?%'";
+		String lastNameSearchContains= "SELECT" +
+											"student_id, first_name, "
+											"last_name, email_address "+
+										"FROM students "+
+										"WHERE last_name LIKE '%?%'";
+
+		try{
+			findStudentByFirstNameExact = databaseConnection.PreparedStatement(firstNameSearchExact);
+			findStudentByLastNameExact = databaseConnection.PreparedStatement(lastNameSearchExact);
+			findStudentByFirstNameContains = databaseConnection.PreparedStatement(firstNameSearchContains);
+			findStudentByLastNameContains = databaseConnection.PreparedStatement(lastNameSearchContains);
+
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			System.exit(-1);
+		}
 
 	}
 
+	/**
+	 *
+	**/
 	StudentListDAO(Connection connection){
-		studentList= new ArrayList<Student>();
+		studentsList= new ArrayList<Student>();
 		databaseConnection= connection;
 	}
 
-
+	/**
+	 *
+	**/
 	public ArrayList<Student> getStudentList(){
-		return studentList;
+		return studentsList;
 	}
 
 
-
+	/**
+	 *
+	**/
 	public void findStudentByFirstName(String firstName){
 		if(findStudentByFirstName == null){
 			System.out.println("Uh oh, findStudentByFirstName is null!!!!!");
@@ -58,7 +124,7 @@ public class StudentListDAO{
                 newStudent.setFirstName(rset.getString(2));
                 newStudent.setLastName (rset.getString(3));
                 newStudent.setEmailAddress(rset.getString(4));    
-                studentList.add(newStudent);
+                studentsList.add(newStudent);
 			}
 
 		}
@@ -69,6 +135,10 @@ public class StudentListDAO{
 		}
 	}
 
+
+	/**
+	 *
+	**/
 	public void findStudentByLastName(String lastName){
 		if(findStudentByLastName == null){
 			System.out.println("Uh oh, findStudentByLastName is null!!!!!");
@@ -86,7 +156,7 @@ public class StudentListDAO{
                 newStudent.setFirstName(rset.getString(2));
                 newStudent.setLastName (rset.getString(3));
                 newStudent.setEmailAddress(rset.getString(4));    
-                studentList.add(newStudent);
+                studentsList.add(newStudent);
 			}
 
 		}
@@ -97,8 +167,6 @@ public class StudentListDAO{
 		}
 
 	}
-
-
-
-
 }
+
+

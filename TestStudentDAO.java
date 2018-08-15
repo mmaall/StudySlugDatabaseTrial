@@ -23,7 +23,9 @@ public class TestStudentDAO{
         try{
             Class.forName("org.postgresql.Driver");    
 
-            connection = DriverManager.getConnection("jdbc:postgresql://192.168.2.205:5433/StudySlug", "axlanthier", "poseydog");
+            connection = 
+                DriverManager.getConnection("jdbc:postgresql://192.168.2.205:5433/StudySlug",
+                                            "axlanthier", "poseydog");
             
             if ( connection != null){
                 System.out.println("Connection to database succesful!!!!");
@@ -42,19 +44,25 @@ public class TestStudentDAO{
 
 
     public static void testFind(StudentDAO testStudent, int studentID){
-        System.out.println("Test Find Student\n");
+        System.out.println("Test Find Student");
         try{
             testStudent.reset();
             testStudent.find(studentID);
-            if(testStudent.getFirstName() == testFirstName &&
-                testStudent.getLastName()==testLastName &&
-                testStudent.getEmailAddress()==testEmail){
+            if(testStudent.getFirstName().equals(testFirstName) &&
+                testStudent.getLastName().equals(testLastName) &&
+                testStudent.getEmailAddress().equals(testEmail)){
 
-                System.out.println("Find Statement succesful!!");
+                System.out.println("Find Statement succesful!!\n");
 
             }
             else{
                 System.out.println("Find Statement unsuccesful");
+                System.out.println("Test Student Data");
+                System.out.println(testStudentID+": "+testFirstName+" "+testLastName);
+                System.out.println("\t"+testEmail);
+                System.out.println("Student Retrieved from Database");
+                System.out.println(testStudent);
+
 
 
             }
@@ -65,17 +73,43 @@ public class TestStudentDAO{
     }
 
     public static void testInsert(StudentDAO testStudent){
-        System.out.println("Test Insert Student\n");
+        System.out.println("Test Insert Student");
         try{
+
+            String insertFirstName = "Foo";
+            String insertLastName = "Bar";
+            String insertEmailAddress= "foobar@gmail.com";
+
+
             testStudent.reset();
-            testStudent.setFirstName("Foo");
-            testStudent.setLastName("Bar");
-            testStudent.setEmailAddress("foobar@gmail.com");
+            testStudent.setFirstName(insertFirstName);
+            testStudent.setLastName(insertLastName);
+            testStudent.setEmailAddress(insertEmailAddress);
             testStudent.save();
 
+            if(testStudent.getFirstName().equals(insertFirstName) &&
+                testStudent.getLastName().equals(insertLastName) &&
+                testStudent.getEmailAddress().equals(insertEmailAddress)){
+
+                System.out.println("Insert Statement succesful!!\n");
+
+            }
+            else{
+                System.out.println("Insert Statement unsuccesful");
+                System.out.println("Test Student Data to Be Inserted");
+                System.out.println(testStudentID+": "+testFirstName+" "+testLastName);
+                System.out.println("\t"+testEmail);
+                System.out.println("Student Retrieved from Database");
+                System.out.println(testStudent);
+
+
+
+            }
+
         }
+
         catch (Exception e){
-        
+
         }
     }
     
