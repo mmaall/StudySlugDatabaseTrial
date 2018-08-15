@@ -43,6 +43,12 @@ public class StudentDAO{
     private PreparedStatement findStudent;
 
     /**
+     *Holds a prepared statement that returns a unique sequence value to be used
+     *as a unique student ID.
+    **/
+    private PreparedStatement nextSequenceValue;
+
+    /**
      *Constructor to create a StudentDAO. Datbaase connection is default to 
      *null. Also sets isNew to true.
     **/
@@ -69,18 +75,19 @@ public class StudentDAO{
                             "WHERE student_id = ?";
 
         String insertString="INSERT INTO students "+
-                                "(first_name, last_name, email_address)" + 
                             "VALUES " +
-                                "(?, ?, ?) ";
+                                "(?, ?, ?, ?) ";
         String findString = "SELECT "+ 
                             "student_id, first_name, "+ 
                             "last_name, email_address "+
                             "FROM students " +
                             "WHERE student_id = ?";
+        String getSequence = "SELECT nextval(unique_student_id)";
         try{
             updateStudent = databaseConnection.prepareStatement(updateString);
             insertStudent = databaseConnection.prepareStatement(insertString);
             findStudent = databaseConnection.prepareStatement(findString);
+            nextSequenceValue = databaseConnection.prepareStatement(getSequence);
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -215,9 +222,20 @@ public class StudentDAO{
 
         if( isNew ){
             try{
-                insertStudent.setString(1, student.getFirstName());
-                insertStudent.setString(2, student.getLastName());
-                insertStudent.setString(3, student.getEmailAddress());
+                ResultSet rset = nextSequenceValue.executeQuery();
+                if(rset.next()){
+                    student.setStudentID(rset.getInt(1));
+                }
+                else{
+                    //It appears that the sequence value could not be found.
+                    //This is a no no.
+                    System.out.println("Sequence value unable to be found");
+                    return;
+                }
+                insertStudent.setInt(1, student.getStudentID());
+                insertStudent.setString(2, student.getFirstName());
+                insertStudent.setString(3, student.getLastName());
+                insertStudent.setString(4, student.getEmailAddress());
 
             
                 insertStudent.executeUpdate();

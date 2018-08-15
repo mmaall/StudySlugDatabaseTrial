@@ -4,15 +4,17 @@ DROP TABLE StudyGroups CASCADE;
 DROP TABLE StudentClasses CASCADE;
 DROP TABLE StudentGroups CASCADE;
 
-CREATE SEQUENCE unique;
+CREATE SEQUENCE unique_student_id;
+CREATE SEQUENCE unique_class_id;
+CREATE SEQUENCE unique_group_id;
 
 CREATE TABLE Students(
-    user_id integer,
+    student_id integer,
     first_name varChar(20) NOT NULL,
     last_name varChar(20) NOT NULL,
-    email varchar(40) UNIQUE,
+    email_address varchar(40) UNIQUE,
 
-    PRIMARY KEY(user_id)
+    PRIMARY KEY(student_id)
 );
 
 CREATE TABLE Classes(
@@ -32,14 +34,18 @@ CREATE TABLE StudyGroups(
 );
 
 CREATE TABLE StudentClasses(
-    student_id integer REFERENCES Students(user_id),
-    classID integer REFERENCES Classes(class_id),
+    student_id integer REFERENCES Students(student_id),
+    class_id integer REFERENCES Classes(class_id),
     PRIMARY KEY (student_id, class_id)
 
 );
 
 CREATE TABLE StudentGroups(
-    student_id integer REFERENCES Students(user_id),
+    student_id integer REFERENCES Students(student_id),
     group_id integer REFERENCES StudyGroups(group_id),
     PRIMARY KEY (student_id, group_id)
 );
+
+COPY Students 
+    FROM '/home/axlanthier/code-samples/StudySlugRefactored/students.dat' 
+    USING DELIMITERS '|';

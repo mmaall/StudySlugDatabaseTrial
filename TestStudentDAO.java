@@ -4,10 +4,22 @@ import java.sql.*;
 //import org.junit.Test;
 //import static org.junit.Assert.assertEquals;
 
+
+
 public class TestStudentDAO{
 
+    public static int testStudentID= 501;
+    public static String testFirstName= "Michael";
+    public static String testLastName= "Lanthier";
+    public static String testEmail= "malanthi@ucsc.edu";
+
     public static void main(String[] args){
+
+
         Connection connection = null;
+        
+
+
         try{
             Class.forName("org.postgresql.Driver");    
 
@@ -18,8 +30,8 @@ public class TestStudentDAO{
             }
 
             StudentDAO student1 = new StudentDAO(connection);
-            testFind(student1, 1);
-            testUpdate(student1, 1);
+            testFind(student1, testStudentID);
+            testInsert(student1);
         
         }
         catch(Exception e){
@@ -27,33 +39,40 @@ public class TestStudentDAO{
             e.printStackTrace();
         }
     }
+
+
     public static void testFind(StudentDAO testStudent, int studentID){
-        System.out.println("Test Find Student\n\n"+
-                            "Print student with ID: "+ studentID);
+        System.out.println("Test Find Student\n");
         try{
             testStudent.reset();
             testStudent.find(studentID);
-            System.out.println(testStudent);
+            if(testStudent.getFirstName() == testFirstName &&
+                testStudent.getLastName()==testLastName &&
+                testStudent.getEmailAddress()==testEmail){
+
+                System.out.println("Find Statement succesful!!");
+
+            }
+            else{
+                System.out.println("Find Statement unsuccesful");
+
+
+            }
         }
         catch(Exception e){
 
         }
     }
 
-    public static void testUpdate(StudentDAO testStudent, int studentID){
-        System.out.println("Test Update Student\n\n" +
-                            "Original Student Data");
+    public static void testInsert(StudentDAO testStudent){
+        System.out.println("Test Insert Student\n");
         try{
             testStudent.reset();
-            testStudent.find(studentID);
-            System.out.println(testStudent);
-            testStudent.setFirstName("Bob");
-            testStudent.setLastName("LawBlah");
+            testStudent.setFirstName("Foo");
+            testStudent.setLastName("Bar");
+            testStudent.setEmailAddress("foobar@gmail.com");
             testStudent.save();
-            testStudent.reset();
-            System.out.println("After Update");
-            testStudent.find(studentID);
-            System.out.println(testStudent);
+
         }
         catch (Exception e){
         
