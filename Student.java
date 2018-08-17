@@ -30,7 +30,7 @@ public class Student{
      *Constructs a new student with empty fields
     **/
     public Student(){
-        studentID= -1;
+        studentID= null;
         firstName=null;
         lastName=null;
         emailAddress=null;

@@ -7,45 +7,19 @@ import java.sql.*;
 **/
 public class StudentDAO{
     
-    /**
-     *Student object that holds all the student information
-    **/
+
     private Student student;
 
-    /**
-     *Identifies whether a new student should be added to the database.
-     *When true, the current student is a new student that should be inserted 
-     *into the database. When false, any modifications will update a student 
-     *already in the databsae. 
-    **/
     private boolean isNew;
 
-    /**
-     *Holds the database connection to a PostgreSQL database.
-    **/
     private Connection databaseConnection;
 
-    /**
-     *Holds prepared statement to update a students values in the database
-    **/
     private PreparedStatement updateStudent;
 
-    /**
-     *Holds a prepared statement to insert a new students values into the 
-     *databsae.
-    **/
     private PreparedStatement insertStudent;
 
-    /**
-     *Holds a prepared statement to find a student based off of their student 
-     *ID. 
-    **/
     private PreparedStatement findStudent;
 
-    /**
-     *Holds a prepared statement that returns a unique sequence value to be used
-     *as a unique student ID.
-    **/
     private PreparedStatement nextSequenceValue;
 
     /**
@@ -165,6 +139,7 @@ public class StudentDAO{
             
         }
         catch(SQLException e){
+            //FIXME Figure ouT how to handle excpetions
             e.printStackTrace();
             System.exit(-1);
         }
