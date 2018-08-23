@@ -17,8 +17,8 @@ public class UniqueIDGenerator{
         						"axlanthier", "poseydog");
 
     	}
-    	catch(SQLException e){
-    		e.printStackTrace();
+    	catch(Exception e){
+    		e.printStackTrace();//TODO: Fix to throw proper exception
     	}
 	}
 
@@ -26,13 +26,30 @@ public class UniqueIDGenerator{
 		if(uniqueIDInstance == null){
 			uniqueIDInstance = new UniqueIDGenerator();
 		}
+		return uniqueIDInstance;
 	}
 
 	public int getUniqueID(){
+		int id= -1;
 		if(nextSequenceValueStatement == null){
 			String nextSeqeunceString = "SELECT nextval(unique_id)";
+			try{
+				nextSequenceValueStatement= 
+					databaseConnection.prepareStatement(nextSeqeunceString);
+			}
+			catch(SQLException e){
+				e.printStackTrace();//TODO: Fix to throw proper exception
+			}
 		}
-
+		try{
+			ResultSet rset= nextSequenceValueStatement.executeQuery();
+			rset.next();
+			id=rset.getInt(1);
+		}
+		catch(SQLException e){
+			e.printStackTrace();//TODO: Fix to throw proper exception
+		}
+		return id;
 	}
 
 }
