@@ -6,23 +6,13 @@ import java.sql.*;
 **/
 public class Student{
     
-    /**
-     * Unique identifier for student
-    **/
+
     private int studentID;
     
-    /**
-     *First name of student
-    **/
     private String firstName;
 
-    /**
-     *Last name of student
-    **/
     private String lastName;
-    /**
-     * Email address of Student
-    **/
+
     private String emailAddress;
 
 

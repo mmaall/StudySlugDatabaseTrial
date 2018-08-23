@@ -4,6 +4,7 @@ DROP TABLE StudyGroups CASCADE;
 DROP TABLE StudentClasses CASCADE;
 DROP TABLE StudentGroups CASCADE;
 
+CREATE SEQUENCE unique_id;
 CREATE SEQUENCE unique_student_id;
 CREATE SEQUENCE unique_class_id;
 CREATE SEQUENCE unique_group_id;
@@ -22,7 +23,7 @@ CREATE TABLE Classes(
     department varChar(4) NOT NULL,
     class_number varChar(3) NOT NULL,
 
-    PRIMARY KEY (class_ID),
+    PRIMARY KEY (class_id),
     UNIQUE (department, class_number)
 );
 
