@@ -8,7 +8,7 @@ public class TestStudentListDAO{
         try{
             Class.forName("org.postgresql.Driver");    
 
-            connection = DriverManager.getConnection("jdbc:postgresql://192.168.2.205:5433/StudySlug", "axlanthier", "poseydog");
+            connection = DriverManager.getConnection("jdbc:postgresql://192.168.2.205:5433/StudySlug", "axlanthier", "password");
             
             if ( connection != null){
                 System.out.println("Connection to database succesful!!!!");

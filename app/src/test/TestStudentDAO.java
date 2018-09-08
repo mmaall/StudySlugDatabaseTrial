@@ -25,7 +25,7 @@ public class TestStudentDAO{
 
             connection = 
                 DriverManager.getConnection("jdbc:postgresql://192.168.2.205:5433/StudySlug",
-                                            "axlanthier", "poseydog");
+                                            "axlanthier", "password");
             
             if ( connection != null){
                 System.out.println("Connection to database succesful!!!!");
