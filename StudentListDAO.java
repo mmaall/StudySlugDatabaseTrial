@@ -10,7 +10,7 @@ public class StudentListDAO{
 	
 
 	private Connection databaseConnection;
-
+	
 
 	private PreparedStatement findStudentByFirstNameExact;
 	
@@ -24,7 +24,7 @@ public class StudentListDAO{
 	private PreparedStatement findStudentByLastNameContains;
 
 
-	StudentListDAO(){
+	public StudentListDAO(){
 		studentsList= new ArrayList<Student>();
 		databaseConnection= null;
 		String firstNameSearchExact= "SELECT " +
@@ -38,7 +38,7 @@ public class StudentListDAO{
 										"student_id, first_name, " +
 										"last_name, email_address " +
 									"FROM students "+
-									"WHERE last_name LIKE '?%'";
+									"WHERE last_name LIKE '? 	'";
 
 		String firstNameSearchContains= "SELECT" +
 											"student_id, first_name, "+
@@ -69,7 +69,7 @@ public class StudentListDAO{
 	 *Creates a new StudentListDAO using an active database connection.
 	 *@param dbConnection Active connection to the PostgreSQL database.
 	**/
-	StudentListDAO(Connection dbConnection){
+	public StudentListDAO(Connection dbConnection){
 		studentsList= new ArrayList<Student>();
 		databaseConnection= dbConnection;
 

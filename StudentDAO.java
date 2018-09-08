@@ -5,31 +5,19 @@ import java.sql.*;
  *Data Access Object for a Single Student.
  *Interacts with a Postgresql Database containing Student information
 **/
-public class StudentDAO{
+public class StudentDAO extends SingletonDAO {
     
 
     private Student student;
 
-    private boolean isNew;
-
-    private Connection databaseConnection;
-
-    private PreparedStatement updateStudent;
-
-    private PreparedStatement insertStudent;
-
-    private PreparedStatement findStudent;
-
-    private PreparedStatement nextSequenceValue;
 
     /**
      *Constructor to create a StudentDAO. Datbaase connection is default to 
      *null. Also sets isNew to true.
     **/
     public StudentDAO(){
-        databaseConnection= null;
-        student = new Student();
-        isNew=true;
+        super(null);
+        student= new Student();
     }
 
     /**
@@ -39,35 +27,8 @@ public class StudentDAO{
      *
     **/
     public StudentDAO(Connection dbConnection){
+        super(dbConnection);
         student= new Student();
-        isNew=true;
-        databaseConnection= dbConnection;
-        String updateString="UPDATE students "+
-                            "SET first_name = ?, "+
-                                "last_name = ?, "+
-                                "email_address = ?"+
-                            "WHERE student_id = ?";
-
-        String insertString="INSERT INTO students "+
-                            "VALUES " +
-                                "(?, ?, ?, ?) ";
-        String findString = "SELECT "+ 
-                            "student_id, first_name, "+ 
-                            "last_name, email_address "+
-                            "FROM students " +
-                            "WHERE student_id = ?";
-        String getSequence = "SELECT nextval(unique_student_id)";
-        try{
-            updateStudent = databaseConnection.prepareStatement(updateString);
-            insertStudent = databaseConnection.prepareStatement(insertString);
-            findStudent = databaseConnection.prepareStatement(findString);
-            nextSequenceValue = databaseConnection.prepareStatement(getSequence);
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-            System.exit(-1);
-        }
-
     }
 
 
@@ -109,7 +70,7 @@ public class StudentDAO{
     **/
     public String getEmailAddress(){
         return student.getEmailAddress();
-    }
+    }   
 
     /**
      *Finds a student based off of a student ID and sets the current student 
@@ -119,14 +80,23 @@ public class StudentDAO{
      *@param studentID Unique student ID of student being searched for.
     **/
     public void find(int studentID){
-        if(findStudent == null){
-            System.out.println("Uh oh, Preparedstatement findStudent is null?!\n");
-            return;
+        if(findStatement == null){
+            String findString = "SELECT "+ 
+                                "student_id, first_name, "+ 
+                                "last_name, email_address "+
+                                "FROM students " +
+                                "WHERE student_id = ?";
+            try{
+                findStatement= databaseConnection.prepareStatement(findString);
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+            }
         }
 
         try{
-            findStudent.setInt(1, studentID);
-            ResultSet rset = findStudent.executeQuery();
+            findStatement.setInt(1, studentID);
+            ResultSet rset = findStatement.executeQuery();
             boolean hasResult = rset.next();
             if(hasResult){
                 student.setStudentID(rset.getInt(1));
@@ -139,7 +109,7 @@ public class StudentDAO{
             
         }
         catch(SQLException e){
-            //FIXME Figure ouT how to handle excpetions
+            //TODO Figure ouT how to handle excpetions
             e.printStackTrace();
             System.exit(-1);
         }
@@ -178,6 +148,16 @@ public class StudentDAO{
         student.setEmailAddress(emailAddress);
     }
 
+    public Student getStudent(){
+        try{
+            return (Student) student.clone();
+        }
+        catch(Exception e){
+            //TODO deal with execption
+        }
+        return null;
+    }
+
     /**
      *Pushes all changes made to the current student object to the database. 
      *If a new student is being created, an insert will be made, otherwise an 
@@ -197,23 +177,30 @@ public class StudentDAO{
 
         if( isNew ){
             try{
-                ResultSet rset = nextSequenceValue.executeQuery();
-                if(rset.next()){
-                    student.setStudentID(rset.getInt(1));
+                //TODO Change to use UniqueIDGenerator
+                if(insertStatement == null){
+                    String insertString="INSERT INTO students "+
+                                        "VALUES " +
+                                        "(?, ?, ?, ?) ";
+                    try{
+                        insertStatement = databaseConnection.prepareStatement(insertString);
+                    }
+                    catch(SQLException e){
+                        e.printStackTrace();
+                    }
+
                 }
-                else{
-                    //It appears that the sequence value could not be found.
-                    //This is a no no.
-                    System.out.println("Sequence value unable to be found");
-                    return;
-                }
-                insertStudent.setInt(1, student.getStudentID());
-                insertStudent.setString(2, student.getFirstName());
-                insertStudent.setString(3, student.getLastName());
-                insertStudent.setString(4, student.getEmailAddress());
+                UniqueIDGenerator idGenerator = UniqueIDGenerator.getInstance();
+
+                student.setStudentID(idGenerator.getUniqueID());
+
+                insertStatement.setInt(1, student.getStudentID());
+                insertStatement.setString(2, student.getFirstName());
+                insertStatement.setString(3, student.getLastName());
+                insertStatement.setString(4, student.getEmailAddress());
 
             
-                insertStudent.executeUpdate();
+                insertStatement.executeUpdate();
                 isNew=false; 
             }
             catch(SQLException e){
@@ -224,11 +211,26 @@ public class StudentDAO{
         }
         else{
             try{ 
-                updateStudent.setString(1, student.getFirstName());
-                updateStudent.setString(2, student.getLastName());
-                updateStudent.setString(3, student.getEmailAddress());
-                updateStudent.setInt(4, student.getStudentID());
-                updateStudent.executeUpdate();
+
+                if(updateStatement== null){
+                    String updateString="UPDATE students "+
+                                        "SET first_name = ?, "+
+                                            "last_name = ?, "+
+                                            "email_address = ?"+
+                                        "WHERE student_id = ?";
+                    try{
+                        updateStatement = databaseConnection.prepareStatement(updateString);
+                    }
+                    catch(SQLException e){
+                        e.printStackTrace();
+                    }
+                }
+
+                updateStatement.setString(1, student.getFirstName());
+                updateStatement.setString(2, student.getLastName());
+                updateStatement.setString(3, student.getEmailAddress());
+                updateStatement.setInt(4, student.getStudentID());
+                updateStatement.executeUpdate();
             }
             catch(SQLException e){
                 e.printStackTrace();
@@ -246,6 +248,7 @@ public class StudentDAO{
         isNew= true;
 
     }
+
 
 
     /**

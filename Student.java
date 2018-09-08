@@ -4,7 +4,7 @@ import java.sql.*;
 /**
  *Represents a basic student
 **/
-public class Student{
+public class Student implements Cloneable{
     
 
     private int studentID;
@@ -20,7 +20,7 @@ public class Student{
      *Constructs a new student with empty fields
     **/
     public Student(){
-        studentID= null;
+        studentID=  0;
         firstName=null;
         lastName=null;
         emailAddress=null;
@@ -79,7 +79,7 @@ public class Student{
     }
 
     /**
-     *Sets the first name of the current student.
+     *Sets the first name of thec urrent student.
      *@param firstName the first name of each student
     **/
     public void setFirstName(String firstName){
@@ -122,12 +122,16 @@ public class Student{
      *name and email address to null. 
     **/
     public void clear(){
-        studentID= -1;
+        studentID= 0;
         firstName= null;
         lastName= null;
         emailAddress= null;
 
     }
+
+    public Object clone() throws CloneNotSupportedException{  
+        return super.clone();  
+    }  
 
     /**
      *Returns formatted values of the current Student
