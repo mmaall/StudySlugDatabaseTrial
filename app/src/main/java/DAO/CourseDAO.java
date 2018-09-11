@@ -1,5 +1,7 @@
+package DAO;
 
 import java.sql.*;
+
 
 public class CourseDAO extends SingletonDAO{
 

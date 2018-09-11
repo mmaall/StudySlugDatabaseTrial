@@ -1,3 +1,5 @@
+package DAO;
+
 public class Course{
 
 	private int courseID;
