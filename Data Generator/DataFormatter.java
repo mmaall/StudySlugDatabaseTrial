@@ -64,8 +64,9 @@ public class DataFormatter{
                 String emailDomain = 
                     validEmailDomains[rand.nextInt(validEmailDomains.length)];
 
-                String email = fName.substring(0,1) + lName + emailDomain;
+                String email = fName.substring(0,1) + lName +(rand.nextInt(100)) + emailDomain;
                 email = email.toLowerCase();
+
                 out.println(uniqueID+"|"+fName+"|"+lName+"|"+email);
             }
             out.close();

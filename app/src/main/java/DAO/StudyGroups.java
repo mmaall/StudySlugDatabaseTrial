@@ -4,7 +4,7 @@ package DAO;
 import java.util.ArrayList;
 
 
-public class Group{
+public class StudyGroups{
 
 	private int groupID;
 	private int associatedClass;
