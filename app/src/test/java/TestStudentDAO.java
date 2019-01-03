@@ -15,20 +15,25 @@ public class TestStudentDAO{
 
     public static void main(String[] args){
 
+        if(args.length != 3){
+            System.out.println("Usage: TestStudentDAO <postgresIP>:<port> <user> <password>");
+        }
 
         Connection connection = null;
-        
+        String url="jdbc:postgresql://"+args[0]+"/studyslug";
+        String user= args[1];
+        String password= args[2];
 
 
         try{
             Class.forName("org.postgresql.Driver");    
 
+
             connection = 
-                DriverManager.getConnection("jdbc:postgresql://18.219.80.210:5432/studyslug",
-                                            "ubuntu", "password");
+                DriverManager.getConnection(url,user,password);
             
             if ( connection != null){
-                System.out.println("Connection to database succesful!!!!");
+                System.out.println("Connection to database succesful");
             }
 
             StudentDAO student1 = new StudentDAO(connection);
