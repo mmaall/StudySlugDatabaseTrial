@@ -25,3 +25,6 @@ hs_err_pid*
 #Sublime text
 *.sublime-project
 *.sublime-workspace
+
+#Sublimetext
+*.sh
