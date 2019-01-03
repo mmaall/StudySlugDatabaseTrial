@@ -7,7 +7,7 @@ DROP TABLE StudentGroups CASCADE;
 CREATE SEQUENCE unique_id;
 CREATE SEQUENCE unique_student_id;
 CREATE SEQUENCE unique_course_id;
-CREATE SEQUENCE unique_group_id;
+CREATE SEQUENCE unique_study_group_id;
 
 CREATE TABLE Students(
     student_id integer,
@@ -25,14 +25,14 @@ CREATE TABLE Courses(
     section integer,
 
     PRIMARY KEY (course_id),
-    UNIQUE (department, class_number)
+    UNIQUE (department, course_number)
 );
 
-CREATE TABLE Group(
-    group_id integer,
-    associatedClass integer REFERENCES Courses(course_id),
+CREATE TABLE StudyGroups(
+    study_group_id integer,
+    associated_course_id integer REFERENCES Courses(course_id),
 
-    PRIMARY KEY(group_id)
+    PRIMARY KEY(study_group_id)
 );
 
 CREATE TABLE StudentCourses(
@@ -44,10 +44,10 @@ CREATE TABLE StudentCourses(
 
 CREATE TABLE StudentGroups(
     student_id integer REFERENCES Students(student_id),
-    group_id integer REFERENCES StudyGroups(group_id),
-    PRIMARY KEY (student_id, group_id)
+    study_group_id integer REFERENCES StudyGroups(study_group_id),
+    PRIMARY KEY (student_id, study_group_id)
 );
 
 COPY Students 
-    FROM '/home/axlanthier/code-samples/StudySlugRefactored/students.dat' 
+    FROM '/home/ubuntu/StudySlugDatabase/students.dat' 
     USING DELIMITERS '|';

@@ -15,8 +15,8 @@ public class UniqueIDGenerator{
 		try{
 			Class.forName("org.postgresql.Driver");    
         	databaseConnection = DriverManager.getConnection(
-        						"jdbc:postgresql://192.168.2.205:5433/StudySlug", 
-        						"axlanthier", "poseydog");
+        						"jdbc:postgresql://18.219.80.210:5433/studyslug", 
+        						"ubuntu", "password");
 
     	}
     	catch(Exception e){

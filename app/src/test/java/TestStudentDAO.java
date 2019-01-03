@@ -1,9 +1,8 @@
-
 import DAO.*;
 
 import java.sql.*;
 //import org.junit.Test;
-    //import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
 
 
 
@@ -25,8 +24,8 @@ public class TestStudentDAO{
             Class.forName("org.postgresql.Driver");    
 
             connection = 
-                DriverManager.getConnection("jdbc:postgresql://192.168.2.205:5433/StudySlug",
-                                            "axlanthier", "password");
+                DriverManager.getConnection("jdbc:postgresql://18.219.80.210:5432/studyslug",
+                                            "ubuntu", "password");
             
             if ( connection != null){
                 System.out.println("Connection to database succesful!!!!");
@@ -76,7 +75,6 @@ public class TestStudentDAO{
     public static void testInsert(StudentDAO testStudent){
         System.out.println("Test Insert Student");
         try{
-
             String insertFirstName = "Foo";
             String insertLastName = "Bar";
             String insertEmailAddress= "foobar@gmail.com";
@@ -87,6 +85,8 @@ public class TestStudentDAO{
             testStudent.setLastName(insertLastName);
             testStudent.setEmailAddress(insertEmailAddress);
             testStudent.save();
+            System.out.println(testStudent);
+            testStudent.find(testStudent.getStudentID());
 
             if(testStudent.getFirstName().equals(insertFirstName) &&
                 testStudent.getLastName().equals(insertLastName) &&
@@ -98,7 +98,7 @@ public class TestStudentDAO{
             else{
                 System.out.println("Insert Statement unsuccesful");
                 System.out.println("Test Student Data to Be Inserted");
-                System.out.println(testStudentID+": "+testFirstName+" "+testLastName);
+                System.out.println(testStudentID+": "+  testFirstName+" "+testLastName);
                 System.out.println("\t"+testEmail);
                 System.out.println("Student Retrieved from Database");
                 System.out.println(testStudent);

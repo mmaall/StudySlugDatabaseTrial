@@ -175,7 +175,7 @@ public class StudentDAO extends SingletonDAO {
         */
 
         if(student.missingValues()){
-            return;// one of the values is not set. Oopsy
+            return; 
         }
 
         if( isNew ){
