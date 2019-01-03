@@ -1,10 +1,5 @@
+Study Slug Refactored
 
-CLASSPATH must have current directory and driver.jar
+Firebase was not very fun to work with, so let's try and get rid of it! The intent is to remove firebase and replace it with a PostgreSQL database being hosted on AWS EC2. Not using an ORM to better understand how database applications work under the covers. 
 
-the JDBC URL was a type -- missing //
-
-Needed a test student with id of 1.
-
-Typoed the table name in the code ("s"). 
-
-I removed the stdnt. from the select to debug it.
+Includes some basic test scripts as well. Aiming to implement JUnit. 
