@@ -1,2 +1,2 @@
-psql postgresql://192.168.2.205:5433/StudySlug axlanthier
+psql postgresql://54.67.4.177:5432/studyslug ubuntu 
 
