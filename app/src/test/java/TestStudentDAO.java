@@ -21,11 +21,22 @@ public class TestStudentDAO{
         Connection connection = null;
 
         //Load in properties file
-            FileReader reader = new FileReader("db.properties");
-            Properties p = new Properties();
+        FileReader reader;
+        Properties p = new Properties();
+
+        try{
+            reader= new FileReader("db.properties");
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+        try{
             p.load(reader);
 
-
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
         //Prepares url and user
         String url="jdbc:postgresql://"+p.getProperty("ip")
             +":"+p.getProperty("port")+"/studyslug";
