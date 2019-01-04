@@ -21,9 +21,9 @@ public class TestStudentDAO{
         Connection connection = null;
 
         //Load in properties file
-        FileReader reader = new FileReader("db.properties");
-        Properties p = new Properties();
-        p.load(reader);
+            FileReader reader = new FileReader("db.properties");
+            Properties p = new Properties();
+            p.load(reader);
 
 
         //Prepares url and user
