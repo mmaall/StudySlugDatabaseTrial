@@ -3,6 +3,8 @@ import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
 
+//Genreates test data to add to database to test SQL statements. 
+
 public class DataFormatter{
 
     public static void main(String[] args){
