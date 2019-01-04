@@ -1,6 +1,8 @@
 import DAO.*;
 
 import java.sql.*;
+import java.util.*;
+import java.io.*;
 //import org.junit.Test;
 //import static org.junit.Assert.assertEquals;
 
@@ -8,21 +10,27 @@ import java.sql.*;
 
 public class TestStudentDAO{
 
-    public static int testStudentID= 1;
+    public static int testStudentID= 501;
     public static String testFirstName= "Michael";
     public static String testLastName= "Lanthier";
     public static String testEmail= "malanthi@ucsc.edu";
 
     public static void main(String[] args){
 
-        if(args.length != 3){
-            System.out.println("Usage: TestStudentDAO <postgresIP>:<port> <user> <password>");
-        }
 
         Connection connection = null;
-        String url="jdbc:postgresql://"+args[0]+"/studyslug";
-        String user= args[1];
-        String password= args[2];
+
+        //Load in properties file
+        FileReader reader = new FileReader("db.properties");
+        Properties p = new Properties();
+        p.load(reader);
+
+
+        //Prepares url and user
+        String url="jdbc:postgresql://"+p.getProperty("ip")
+            +":"+p.getProperty("port")+"/studyslug";
+        String user= p.getProperty("user");
+
 
 
         try{
@@ -30,7 +38,7 @@ public class TestStudentDAO{
 
 
             connection = 
-                DriverManager.getConnection(url,user,password);
+                DriverManager.getConnection(url,user,p.getProperty("password"));
             
             if ( connection != null){
                 System.out.println("Connection to database succesful");
@@ -51,8 +59,8 @@ public class TestStudentDAO{
     public static void testFind(StudentDAO testStudent, int studentID){
         System.out.println("Test Find Student");
         try{
-            testStudent.reset();
-            testStudent.find(studentID);
+            testStudent.reset()
+;            testStudent.find(studentID);
             if(testStudent.getFirstName().equals(testFirstName) &&
                 testStudent.getLastName().equals(testLastName) &&
                 testStudent.getEmailAddress().equals(testEmail)){
