@@ -26,17 +26,15 @@ public class TestStudentDAO{
 
         try{
             reader= new FileReader("db.properties");
-        }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
-        try{
             p.load(reader);
 
-        }
-        catch(IOException e){
+    
+        catch(IOException|FileNotFoundException e){
             e.printStackTrace();
         }
+
+
+
         //Prepares url and user
         String url="jdbc:postgresql://"+p.getProperty("ip")
             +":"+p.getProperty("port")+"/studyslug";
@@ -46,8 +44,6 @@ public class TestStudentDAO{
 
         try{
             Class.forName("org.postgresql.Driver");    
-
-
             connection = 
                 DriverManager.getConnection(url,user,p.getProperty("password"));
             
