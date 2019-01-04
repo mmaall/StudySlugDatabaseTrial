@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class TestStudentDAO{
 
-    public static int testStudentID= 501;
+    public static int testStudentID= 1;
     public static String testFirstName= "Michael";
     public static String testLastName= "Lanthier";
     public static String testEmail= "malanthi@ucsc.edu";
