@@ -27,9 +27,9 @@ public class TestStudentDAO{
         try{
             reader= new FileReader("db.properties");
             p.load(reader);
-
+        }
     
-        catch(IOException|FileNotFoundException e){
+        catch(IOException e){
             e.printStackTrace();
         }
 
