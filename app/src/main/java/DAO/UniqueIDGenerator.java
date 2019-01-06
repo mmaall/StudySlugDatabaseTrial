@@ -1,6 +1,8 @@
 package DAO;
 
 import java.sql.*;
+import java.util.*;
+import java.io.*;
 
 public class UniqueIDGenerator{
 
@@ -13,6 +15,14 @@ public class UniqueIDGenerator{
 
 	private UniqueIDGenerator(){
 		try{
+        	
+        	FileReader reader;
+        	Properties p = new Properties();
+        	String studySlugDir= System.getenv("STUDYSLUGDIR");
+
+			reader= new FileReader(studySlugDir+"/app/config/db.properties");
+        	p.load(reader);
+
 			Class.forName("org.postgresql.Driver");    
         	databaseConnection = DriverManager.getConnection(
         						"jdbc:postgresql://13.57.203.99:5432/studyslug", 
