@@ -11,11 +11,6 @@ import java.net.URL;
 
 public class TestStudentDAO{
 
-    public static int testStudentID= 501;
-    public static String testFirstName= "Michael";
-    public static String testLastName= "Lanthier";
-    public static String testEmail= "malanthi@ucsc.edu";
-
     public static void main(String[] args){
 
 
@@ -23,27 +18,26 @@ public class TestStudentDAO{
 
         //Load in properties file
         FileReader reader;
-        URL url;
         Properties p = new Properties();
+        String studySlugDir= System.getenv("STUDYSLUGDIR");
 
         try{
-            url = this.class.getClassLoader().getResource("db.property");
-            reader= new FileReader(new File(url.getPath()));
-            p.load(reader);
+        	reader= new FileReader(studySlugDir+"/app/config/db.properties");
+        	p.load(reader);
         }
-    
         catch(IOException e){
-            e.printStackTrace();
+        	e.printStackTrace();
         }
-
-
+        /*
+        System.out.println("IP: "+p.getProperty("ip"));
+        System.out.println("Port: "+p.getProperty("port"));
+        System.out.println("User: "+p.getProperty("user"));
+		*/
 
         //Prepares url and user
         String url="jdbc:postgresql://"+p.getProperty("ip")
             +":"+p.getProperty("port")+"/studyslug";
         String user= p.getProperty("user");
-
-
 
         try{
             Class.forName("org.postgresql.Driver");    
