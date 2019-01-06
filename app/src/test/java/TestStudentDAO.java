@@ -139,7 +139,7 @@ public class TestStudentDAO{
          *
         **/
         String testName= "TestName";
-        System.out.println("/nTesting Update Function");
+        System.out.println("\nTesting Update Function");
         System.out.println("Update student "+studentList[0].getStudentID());
         student.find(studentList[0].getStudentID());
         student.setFirstName(testName);

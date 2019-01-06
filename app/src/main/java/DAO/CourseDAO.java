@@ -53,7 +53,7 @@ public class CourseDAO extends SingletonDAO{
 	/**
 	 *
 	**/
-	public void find(int courseID){
+	public boolean find(int courseID){
 		if(findStatement == null){
 			String findByCourseID = "SELECT course_id, department, "+
 									"course_number, section " +
@@ -77,11 +77,13 @@ public class CourseDAO extends SingletonDAO{
 				course.setCourseNumber(rset.getString(2));
 				course.setDepartment(rset.getString(3));
 				course.setSection(rset.getInt(4));
-			}
+		        return true;	
+                    }
 		}
 		catch(SQLException e){
 
 		}
+            return false;
 	}
 
 
