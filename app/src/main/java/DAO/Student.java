@@ -133,7 +133,21 @@ public class Student implements Cloneable{
 
     public Object clone() throws CloneNotSupportedException{  
         return super.clone();  
-    }  
+    }
+
+
+    public boolean equals(Student s1){
+        if(this.firstName.equals(s1.getFirstName())&&
+            this.lastName.equals(s1.getLastName())&&
+            this.emailAddress.equals(s1.getEmailAddress())&&
+            this.studentID==s1.getStudentID()){
+
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     /**
      *Returns formatted values of the current Student
