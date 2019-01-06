@@ -10,7 +10,7 @@ public class StudyGroups{
 	private int associatedClass;
 	private ArrayList<Student> students;
 
-	public Group(){
+	public StudyGroups(){
 		groupID = -1;
 		associatedClass= -1;
 		students = new ArrayList<Student>();

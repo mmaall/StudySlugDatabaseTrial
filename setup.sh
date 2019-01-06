@@ -11,3 +11,6 @@
 #directory.
 STUDYSLUGDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 export STUDYSLUGDIR
+
+#Sets CLASSPATH for DAO Package
+export CLASSPATH=/home/axlanthier/code-samples/StudySlugRefactored/app/src/main/java:.

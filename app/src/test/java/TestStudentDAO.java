@@ -53,6 +53,74 @@ public class TestStudentDAO{
             System.out.println("Error while connection to database: " +e);
             e.printStackTrace();
         }
+        
+        StudentDAO student = new StudentDAO(connection);
+
+        //Fake people to add to test database
+        String studentArray[][] = {
+            {"Tom", "Smith", "tsmith@ucsc.edu"},
+            {"John", "Doe",  "jdoe@gmail.com"},
+            {"Hangry","Potatos", "hpotatos@gmail.com"},
+            {"Arnold","Palmer","apalmer@gmail.com"},
+            {"Michael","Runsalot","mrunsalot@gmail.com"},
+            {"Han", "Solo", "hsolo@gmail.com"},
+            {"Bruce", "Wayne", "bwayne@batman.net"},
+            {"Indiana","Jones","ijones@gmail.com"},
+            {"Chevy", "Chae", "cchase@gmail.com"},
+            {"Darrell", "Long", "dlong@gmail.com"}
+
+        };        
+        
+        //Array to track assigned student ID's. Used to 
+        int[] studentIDs = new int[studentArray.length];
+
+        //Array creating known students and their IDs. Used for verifying database
+        //correctness. 
+        Student[] studentList = new Student[studentArray.length];
+
+        //Go through the fake student data and put them into the database. 
+        for(int i= 0; i< studentArray.length; i++){
+            student.reset();
+            student.setFirstName(studentArray[i][0]);
+            student.setLastName(studentArray[i][1]);
+            student.setEmailAddress(studentArray[i][2]);
+            student.save();
+
+
+            //Creates a list of new student objects. Makes verification a little 
+            //cleaner. 
+            studentList[i]= new Student();
+            studentList[i].setStudentID(student.getStudentID());
+            studentList[i].setFirstName(student.getFirstName());
+            studentList[i].setLastName(student.getLastName());
+            studentList[i].setEmailAddress(student.getEmailAddress());
+        }
+
+        System.out.println("Students Added to Database.\n\n");
+        System.out.println("One by one query of each individual student based on ID");
+
+        //Iterate through known student IDs and check query database for them.
+        for(int i= 0; i<studentIDs.length;i++){
+            student.find(studentIDs[i]);
+            Student result= student.getStudent();
+            if(result.equals(studentList[i])){
+                //Query returns correct result.
+                System.out.println("Student "+i+" added and verified");
+            }
+            else{
+                //Query returns incorrect result.
+                System.out.println("STUDENT "+i+" NOT VERIFIED");
+                System.out.println("Student From Database");
+                System.out.println(result);
+                System.out.println("Proper Result");
+                System.out.println(studentList[i]);
+            }
+
+        }
+
+        System.out.println("Single student query via student ID checked against correct data");
+        
+
     }
 
 }
