@@ -100,12 +100,15 @@ public class TestStudentDAO{
         System.out.println("One by one query of each individual student based on ID");
 
         //Iterate through known student IDs and check query database for them.
+
+        int passedTests= 0;
         for(int i= 0; i<studentIDs.length;i++){
             student.find(studentList[i].getStudentID());
             Student result= student.getStudent();
             if(result.equals(studentList[i])){
                 //Query returns correct result.
                 System.out.println("Student "+i+" added and verified");
+                passedTests++;
             }
             else{
                 //Query returns incorrect result.
@@ -118,9 +121,42 @@ public class TestStudentDAO{
             }
 
         }
+        if(studentList.length==passedTests){
+            System.out.println("All tests passed");
+        }
+        else{
+            System.out.println("ERRORS! "+passedTests+ " out of " +studentList.length+ 
+                                " passed.");
+        }
 
-        System.out.println("Single student query via student ID checked against correct data");
+
+        System.out.println("Single student query via student ID checked against " 
+            +"correct data finished");
         
+
+        /**
+         *Testing update ability of a single person.
+         *
+        **/
+        String testName= "TestName";
+        System.out.println("/nTesting Update Function");
+        System.out.println("Update student "+studentList[0].getStudentID());
+        student.find(studentList[0].getStudentID());
+        student.setFirstName(testName);
+        student.save();
+
+        //Now refind that student based on student ID.
+        student.find(studentList[0].getStudentID());
+
+
+        if(student.getFirstName().equals(testName)){
+            System.out.println("Update test passes!");
+        }
+        else{
+            System.out.println("Update test fails");
+            System.out.println("Queried first name: "+student.getFirstName());
+            System.out.println("Intended first name: "+ testName);
+        }
 
     }
 
