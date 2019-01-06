@@ -242,6 +242,34 @@ public class StudentDAO extends SingletonDAO {
         }
     }
 
+
+    public boolean remove(){
+        if(student.getStudentID()<0){
+            //no student ID
+        }
+        //must prepare statement
+        if(deleteStatement==null){
+            String deleteString="DELETE FROM students WHERE student_id = ?";
+            try{
+                updateStatement = databaseConnection.prepareStatement(deleteString);                
+            }
+            catch(SQLException e){
+                System.out.println("Unable to prepare delete statement");
+                return false;
+            }
+        }
+        try{
+            updateStatement.setInt(1, student.getStudentID());
+            updateStatement.executeUpdate();
+        }
+        catch(SQLException e){
+            System.out.println("Deletion failed");
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      *Resets the current StudentDAO. Clears the student and resets for a new
      * student.S
