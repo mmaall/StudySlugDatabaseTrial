@@ -91,9 +91,9 @@ public class TestStudentDAO{
             //cleaner. 
             studentList[i]= new Student();
             studentList[i].setStudentID(student.getStudentID());
-            studentList[i].setFirstName(student.getFirstName());
-            studentList[i].setLastName(student.getLastName());
-            studentList[i].setEmailAddress(student.getEmailAddress());
+            studentList[i].setFirstName(studentArray[i][0]);
+            studentList[i].setLastName(studentArray[i][1]);
+            studentList[i].setEmailAddress(studentArray[i][2]);
         }
 
         System.out.println("Students Added to Database.\n\n");
@@ -101,7 +101,7 @@ public class TestStudentDAO{
 
         //Iterate through known student IDs and check query database for them.
         for(int i= 0; i<studentIDs.length;i++){
-            student.find(studentIDs[i]);
+            student.find(studentList[i].getStudentID());
             Student result= student.getStudent();
             if(result.equals(studentList[i])){
                 //Query returns correct result.

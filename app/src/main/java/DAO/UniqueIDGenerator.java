@@ -14,26 +14,27 @@ public class UniqueIDGenerator{
 
 
 	private UniqueIDGenerator(){
-		try{
+	    try{
         	
         	FileReader reader;
         	Properties p = new Properties();
         	String studySlugDir= System.getenv("STUDYSLUGDIR");
 
-			reader= new FileReader(studySlugDir+"/app/config/db.properties");
+		reader= new FileReader(studySlugDir+"/app/config/db.properties");
         	p.load(reader);
+                String url="jdbc:postgresql://"+p.getProperty("ip")
+                +":"+p.getProperty("port")+"/studyslug";
+                String user= p.getProperty("user");
+                databaseConnection =
+                    DriverManager.getConnection(url,user,p.getProperty("password"));
 
-			Class.forName("org.postgresql.Driver");    
-        	databaseConnection = DriverManager.getConnection(
-        						"jdbc:postgresql://13.57.203.99:5432/studyslug", 
-        						"ubuntu", "password");
 
     	    }
-    	catch(Exception e){
+    	    catch(Exception e){
                 System.out.println("Unable to connect to database for " +
                     "unique ID generator");
-    		e.printStackTrace();//TODO: Fix to throw proper exception
-    	}
+        	e.printStackTrace();//TODO: Fix to throw proper exception
+    	    }
 	}
 
 	public static UniqueIDGenerator getInstance(){
