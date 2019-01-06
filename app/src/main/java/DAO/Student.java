@@ -110,13 +110,11 @@ public class Student implements Cloneable{
      *@return True if the student is missing a first name, last name or
      *          email address. Otherwise returns false.
     **/
-    public boolean missingValues(){
+    public boolean isValid(){
         if(firstName == null || lastName == null || emailAddress == null){
             return false;
         }
-        else{
-            return true;
-        }
+        return true;
     }
 
     /**

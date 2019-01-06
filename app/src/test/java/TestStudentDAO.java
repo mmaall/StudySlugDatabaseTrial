@@ -109,11 +109,12 @@ public class TestStudentDAO{
             }
             else{
                 //Query returns incorrect result.
-                System.out.println("STUDENT "+i+" NOT VERIFIED");
+                System.out.println("\nSTUDENT "+i+" NOT VERIFIED");
                 System.out.println("Student From Database");
                 System.out.println(result);
                 System.out.println("Proper Result");
                 System.out.println(studentList[i]);
+                System.out.println();
             }
 
         }

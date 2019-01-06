@@ -174,7 +174,7 @@ public class StudentDAO extends SingletonDAO {
             Check if prepared statement is null. If is, set template
         */
 
-        if(student.missingValues()){
+        if(!(student.isValid())){
             return; 
         }
 
@@ -204,7 +204,7 @@ public class StudentDAO extends SingletonDAO {
 
             
                 insertStatement.executeUpdate();
-                isNew=false; 
+                isNew=false;
             }
             catch(SQLException e){
                 e.printStackTrace();

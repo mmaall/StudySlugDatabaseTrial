@@ -15,11 +15,13 @@ public class UniqueIDGenerator{
 		try{
 			Class.forName("org.postgresql.Driver");    
         	databaseConnection = DriverManager.getConnection(
-        						"jdbc:postgresql://18.219.80.210:5433/studyslug", 
+        						"jdbc:postgresql://13.57.203.99:5432/studyslug", 
         						"ubuntu", "password");
 
-    	}
+    	    }
     	catch(Exception e){
+                System.out.println("Unable to connect to database for " +
+                    "unique ID generator");
     		e.printStackTrace();//TODO: Fix to throw proper exception
     	}
 	}
@@ -34,7 +36,7 @@ public class UniqueIDGenerator{
 	public int getUniqueID(){
 		int id= -1;
 		if(nextSequenceValueStatement == null){
-			String nextSeqeunceString = "SELECT nextval(unique_id)";
+			String nextSeqeunceString = "SELECT nextval('unique_id')";
 			try{
 				nextSequenceValueStatement= 
 					databaseConnection.prepareStatement(nextSeqeunceString);
@@ -44,11 +46,13 @@ public class UniqueIDGenerator{
 			}
 		}
 		try{
-			ResultSet rset= nextSequenceValueStatement.executeQuery();
-			rset.next();
-			id=rset.getInt(1);
+		    ResultSet rset= 
+                    nextSequenceValueStatement.executeQuery();
+	            rset.next();
+		    id=rset.getInt(1);
 		}
 		catch(SQLException e){
+                     System.out.println("Unique ID Generator Result Set Failure");
 			e.printStackTrace();//TODO: Fix to throw proper exception
 		}
 		return id;
