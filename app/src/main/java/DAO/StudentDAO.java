@@ -82,7 +82,7 @@ public class StudentDAO extends SingletonDAO {
      *because all changes will force an update.
      *@param studentID Unique student ID of student being searched for.
     **/
-    public void find(int studentID){
+    public boolean find(int studentID){
         if(findStatement == null){
             String findString = "SELECT "+ 
                                 "student_id, first_name, "+ 
@@ -107,15 +107,15 @@ public class StudentDAO extends SingletonDAO {
                 student.setLastName (rset.getString(3));
                 student.setEmailAddress(rset.getString(4));    
                 isNew= false;
-            }
-            
+                return true;
+            }            
             
         }
         catch(SQLException e){
             //TODO Figure ouT how to handle excpetions
-            e.printStackTrace();
-            System.exit(-1);
+            System.out.println("Either nothing was found or statement failed");
         }
+        return false;
                     
     }
 
@@ -266,6 +266,7 @@ public class StudentDAO extends SingletonDAO {
             System.out.println("Deletion failed");
             return false;
         }
+        student.clear();
 
         return true;
     }

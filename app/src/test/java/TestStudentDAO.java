@@ -158,6 +158,40 @@ public class TestStudentDAO{
             System.out.println("Intended first name: "+ testName);
         }
 
+
+        /**
+         *Testing deletion. We'll delete everyone for that matter.
+        **/
+        System.out.println("\nTesting deletion");
+        //
+        passedTests= 0;
+        for(int i= 0; i<studentIDs.length;i++){
+            student.find(studentList[i].getStudentID());
+            //Deletion Failed
+            if(!student.remove()){
+                System.out.println("Deletion Failed");
+            }
+
+            if(!student.find(studentList[i].getStudentID())){
+                //Query returns correct result.
+                System.out.println("Student "+i+" is deleted");
+                passedTests++;
+            }
+            else{
+                //Query returns incorrect result.
+                System.out.println("\nSTUDENT "+i+" NOT DELETED");
+                System.out.println("Student From Database");
+                System.out.println(student.getStudent());
+            }
+
+        }
+        if(studentList.length==passedTests){
+            System.out.println("All tests passed");
+        }
+        else{
+            System.out.println("ERRORS! "+passedTests+ " out of " +studentList.length+ 
+                                " passed.");
+        }
     }
 
 }

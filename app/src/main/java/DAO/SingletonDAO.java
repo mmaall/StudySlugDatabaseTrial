@@ -15,7 +15,7 @@ public abstract class SingletonDAO{
 
 	public PreparedStatement findStatement;
 
-
+	public PreparedStatement deleteStatement;
 
 	/**
 	 *Default constructor for SingletonDAO. Do not use
@@ -34,7 +34,7 @@ public abstract class SingletonDAO{
 		this.databaseConnection= databaseConnection;
 	}
 
-	public abstract void find(int uniqueID);
+	public abstract boolean find(int uniqueID);
 
 	public abstract void save();
 
