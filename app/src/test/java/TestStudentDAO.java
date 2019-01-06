@@ -3,6 +3,7 @@ import DAO.*;
 import java.sql.*;
 import java.util.*;
 import java.io.*;
+import java.net.URL;
 //import org.junit.Test;
 //import static org.junit.Assert.assertEquals;
 
@@ -22,10 +23,12 @@ public class TestStudentDAO{
 
         //Load in properties file
         FileReader reader;
+        URL url;
         Properties p = new Properties();
 
         try{
-            reader= new FileReader("db.properties");
+            url = this.class.getClassLoader().getResource("db.property");
+            reader= new FileReader(new File(url.getPath()));
             p.load(reader);
         }
     

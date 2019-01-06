@@ -23,8 +23,8 @@ hs_err_pid*
 *.sublime-project
 *.sublime-workspace
 
-#Bash scripts
-*.sh
+#Local Bash scripts
+Local*.sh
 
 #Properties files
 *.properties
