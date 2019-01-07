@@ -17,7 +17,19 @@ The end goal is to remove Firebase from Study Slug and replace it with a Postgre
 #### Amazon EC2 Instance
 Spin up an Amazon EC2 instance. Install PostgreSQL and run createSchema.sql to add all necessary tables. Done!
 #### Code
-Clone this lovely repository and do a couple of things. Create a properties file, db.properties. This will be placed in  
+Clone this lovely repository and do a couple of things. Create a properties file, db.properties. Place the file cfg like below. 
+```bash
+	/StudySlugRefactored/app/cfg/db.properties
+``` 
+db.properties should be formated as below.
+
+```properties
+	ip= <AWS EC2 Instance's ip>
+	port= <Port PostgreSQL is listening to on EC2 instance>
+	user= <PostgreSQL database username>
+	password= <Password to PostgreSQL database>
+```
+
 
 
 ### Data Access Objects
@@ -25,7 +37,7 @@ Clone this lovely repository and do a couple of things. Create a properties file
 All the data access objects have been written by myself in Java and have their appropriate getters and setters. 
 
 ```java 
-	public String getFirstName(){
+public String getFirstName(){
         return student.getFirstName();
     }
 
@@ -37,16 +49,16 @@ All the data access objects have been written by myself in Java and have their a
 All DAOs have prepared SQL statements for effeciency.
 
 ```java
-	public PreparedStatement updateStatement;
-	public PreparedStatement insertStatement;
-	public PreparedStatement findStatement;
-	public PreparedStatement deleteStatement;
+	private PreparedStatement updateStatement;
+	private PreparedStatement insertStatement;
+	private PreparedStatement findStatement;
+	private PreparedStatement deleteStatement;
 ```
 
 JDBC is used to connect to database, prepare statements and execute queries. 
 
 ```java
-	String findString = "SELECT "+ 
+String findString = "SELECT "+ 
                         "student_id, first_name, "+ 
                         "last_name, email_address "+
                         "FROM students " +
