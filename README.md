@@ -23,7 +23,7 @@ Clone this lovely repository and do a couple of things. Create a properties file
 ``` 
 db.properties should be formated as below.
 
-```properties
+```text
 	ip= <AWS EC2 Instance's ip>
 	port= <Port PostgreSQL is listening to on EC2 instance>
 	user= <PostgreSQL database username>
@@ -37,7 +37,7 @@ db.properties should be formated as below.
 All the data access objects have been written by myself in Java and have their appropriate getters and setters. 
 
 ```java 
-public String getFirstName(){
+	public String getFirstName(){
         return student.getFirstName();
     }
 
@@ -58,7 +58,7 @@ All DAOs have prepared SQL statements for effeciency.
 JDBC is used to connect to database, prepare statements and execute queries. 
 
 ```java
-String findString = "SELECT "+ 
+	String findString = "SELECT "+ 
                         "student_id, first_name, "+ 
                         "last_name, email_address "+
                         "FROM students " +
