@@ -1,4 +1,4 @@
-import DAO.*;
+import dao.*;
 
 import java.sql.*;
 import java.util.*;
@@ -22,7 +22,7 @@ public class TestStudentDAO{
         String studySlugDir= System.getenv("STUDYSLUGDIR");
 
         try{
-        	reader= new FileReader(studySlugDir+"/app/config/db.properties");
+        	reader= new FileReader(studySlugDir+"/app/cfg/db.properties");
         	p.load(reader);
         }
         catch(IOException e){
