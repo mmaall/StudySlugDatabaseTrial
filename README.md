@@ -1,5 +1,5 @@
-Study Slug Refactored
-=====================
+Experimenting with PostgreSQL Database Access
+=============================================
 
 
 After working on StudySlug, an application to form study groups at UCSC, I realized I was not a huge fan of using Firebase as a database. That was the perfect opportunity to explore implementing a SQL Database into an application and learning how an application and it's database truly communicate. 
