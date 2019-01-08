@@ -1,4 +1,4 @@
-package DAO;
+package dao;
 
 import java.sql.*;
 import java.util.*;
@@ -20,7 +20,7 @@ public class UniqueIDGenerator{
         	Properties p = new Properties();
         	String studySlugDir= System.getenv("STUDYSLUGDIR");
 
-		reader= new FileReader(studySlugDir+"/app/config/db.properties");
+			reader= new FileReader(studySlugDir+"/app/cfg/db.properties");
         	p.load(reader);
                 String url="jdbc:postgresql://"+p.getProperty("ip")
                 +":"+p.getProperty("port")+"/studyslug";

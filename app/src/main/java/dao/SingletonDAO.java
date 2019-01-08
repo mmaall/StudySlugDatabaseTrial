@@ -1,21 +1,21 @@
-package DAO;
+package dao;
 
 import java.sql.*;
 
 
 public abstract class SingletonDAO{
 
-	public boolean isNew;
+	protected boolean isNew;
 
-	public Connection databaseConnection;
+	protected Connection databaseConnection;
 
-	public PreparedStatement updateStatement;
+	protected PreparedStatement updateStatement;
 
-	public PreparedStatement insertStatement;
+	protected PreparedStatement insertStatement;
 
-	public PreparedStatement findStatement;
+	protected PreparedStatement findStatement;
 
-	public PreparedStatement deleteStatement;
+	protected PreparedStatement deleteStatement;
 
 	/**
 	 *Default constructor for SingletonDAO. Do not use

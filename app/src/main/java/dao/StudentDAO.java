@@ -1,4 +1,4 @@
-package DAO;
+package dao;
 
 
 import java.sql.*;
@@ -93,7 +93,10 @@ public class StudentDAO extends SingletonDAO {
                 findStatement= databaseConnection.prepareStatement(findString);
             }
             catch(SQLException e){
+                //This should be writing to some logger
+                System.out.println("Preparing find statement failed");
                 e.printStackTrace();
+                return false;
             }
         }
 
