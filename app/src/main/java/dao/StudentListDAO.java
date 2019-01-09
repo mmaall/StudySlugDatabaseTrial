@@ -30,29 +30,30 @@ public class StudentListDAO{
 	public StudentListDAO(){
 		studentsList= new ArrayList<Student>();
 		databaseConnection= null;
-		String firstNameSearchExact= "SELECT " +
-									"student_id, first_name, " +
-									"last_name, email_address " +
-								"FROM students "+
-								"WHERE first_name LIKE '?'";
+		String firstNameSearchExact="SELECT " +
+						"student_id, first_name, " +
+						"last_name, email_address " +
+					    "FROM students "+
+					    "WHERE first_name LIKE '?'";
 
 
 		String lastNameSearchExact ="SELECT " +
-										"student_id, first_name, " +
-										"last_name, email_address " +
-									"FROM students "+
-									"WHERE last_name LIKE '? 	'";
+						"student_id, first_name, " +
+						"last_name, email_address " +
+		    			    "FROM students "+
+					    "WHERE last_name LIKE '? 	'";
 
 		String firstNameSearchContains= "SELECT" +
-											"student_id, first_name, "+
-											"last_name, email_address "+
-										"FROM students "+
-										"WHERE first_name LIKE '%?%'";
-		String lastNameSearchContains= "SELECT" +
-											"student_id, first_name, "+
-											"last_name, email_address "+
-										"FROM students "+
-										"WHERE last_name LIKE '%?%'";
+						    "student_id, first_name, "+
+            					    "last_name, email_address "+
+                                                "FROM students "+
+						"WHERE first_name LIKE '%?%'";
+
+		String lastNameSearchContains = "SELECT" +
+					            "student_id, first_name, "+
+						    "last_name, email_address "+
+						"FROM students "+
+						"WHERE last_name LIKE '%?%'";
 
 		try{
 			findStudentByFirstNameExact = databaseConnection.prepareStatement(firstNameSearchExact);
@@ -130,26 +131,31 @@ public class StudentListDAO{
 	**/
 	public ArrayList<Student> findStudentByFirstNameExact(String firstName){
 		if(findStudentByFirstNameContains == null){
+                        //TODO: In this case, findStudentByFirstNameContains is not 
+                        //prepared yet. Need to prepare that statement
 			System.out.println("Uh oh, findStudentByFirstName is null!!!!!");
 			return null;
 		}
 
 
 		try{
-			findStudentByFirstNameContains.setString(1, firstName);
-			ResultSet rset = findStudentByFirstNameExact.executeQuery();
-			
-			while(rset.next()){
-				Student newStudent= new Student();
-				newStudent.setStudentID(rset.getInt(1));
-                newStudent.setFirstName(rset.getString(2));
-                newStudent.setLastName (rset.getString(3));
-                newStudent.setEmailAddress(rset.getString(4));    
-                studentsList.add(newStudent);
-			}
+		    findStudentByFirstNameContains.setString(1, firstName);
+		    ResultSet rset = findStudentByFirstNameExact.executeQuery();
+		    
+
+                    //Find students and adds them to an arraylist. 
+		    while(rset.next()){
+			Student newStudent= new Student();
+			newStudent.setStudentID(rset.getInt(1));
+                        newStudent.setFirstName(rset.getString(2));
+                        newStudent.setLastName (rset.getString(3));
+                        newStudent.setEmailAddress(rset.getString(4));    
+                        studentsList.add(newStudent);
+		    }
 
 		}
 		catch(SQLException e){
+                        System.out.println("Unable to find student
 			e.printStackTrace();
 			System.exit(-1);
 		}
@@ -164,6 +170,7 @@ public class StudentListDAO{
 	 *@param lastName The exact last name being searched for
 	 *@return List of students who match the last name
 	**/
+        //TODO: Change to return boolean to keep consistant with singleton class
 	public ArrayList<Student> findStudentByLastNameExact(String lastName){
 		if(findStudentByLastNameExact == null){
 			System.out.println("Uh oh, findStudentByLastNameExact is null!!!!!");
