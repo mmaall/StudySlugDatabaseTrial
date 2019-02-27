@@ -108,7 +108,7 @@ The unique ID generation is done on the database by using sequences in PostgreSQ
 As of right now, this project is not in a good state to be deployed to the Study Slug Android application that was developed in the past. It requires quite a few more objects and features listed below.
 
 ##### Exception Handling 
-Exception handling right now mostly consists of printing, stack traces and exiting the program. This is nuacceptable if this project is to continue, so throwing correct and useful exceptions is high up on the list of things to get done.  
+Exception handling right now mostly consists of printing, stack traces and exiting the program. This is unacceptable if this project is to continue, so throwing correct and useful exceptions is high up on the list of things to get done.  
 
 ##### Logger
 As of right now there is no way of logging anything the program does. Implementing some sort of log would better allow me to debug issues as well as track other information, such as unsuccesful queries, connection issues, etc.. 
